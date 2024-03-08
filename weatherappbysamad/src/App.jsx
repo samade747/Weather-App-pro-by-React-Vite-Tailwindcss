@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
+import Weather_pic from './Weather-pic.jpg'
+import Drizzle from './assets/mist-pic.jpg'
+import Cloud from './assets/cloudImg-2.jpg'
+import Halfcloud from './assets/weather-pic.jpg'
+import Thunder from './assets/thunder.jpg'
+import RainImg from './assets/thunder.jpg'
+import ClearImg from './assets/clear.jpg'
+import OvercastImg from './assets/overcast.jpg'
+
+
 function App() {
   const [cityName, setCityName] = useState("");
   const [weatherData, SetWeatherData] = useState();
@@ -16,8 +26,9 @@ function App() {
       .then((response) => {
         console.log("data", response);
 
-        const {
-          current: {
+
+        // samad destructuring the data from the response 
+        const {current: {
             condition: { text },
             last_updated,
             cloud,
@@ -27,15 +38,16 @@ function App() {
             wind_mph,
           },
           location: { name, country },
-            forecast: {
-              forecastday: {
-                0: {
-                  astro: { sunrise, sunset },
-                  hour,
+            forecast: { forecastday: {
+                0: {astro: { sunrise, sunset },
+                   hour, 
                 },      
               },
             },
           } = response;
+          console.log(text, sunrise, sunset)
+      const settingHour = hour.slice(13, 23)
+      
 
 
 
