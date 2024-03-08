@@ -46,15 +46,17 @@ function App() {
             },
           } = response;
           console.log(text, sunrise, sunset)
-      const settingHour = hour.slice(13, 23)
-      
+          // Extracting hour from the respone data
+      const settingHour = hour.slice(13, 23) // settng the hour state variable 
+      setGetHour([...settingHour])
 
+      // setng weather data state 
+      SetWeatherData({
+        text,
+        last_updated
 
-
-
-
-
-      })
+      });
+     });
     }
   
   }, [])
