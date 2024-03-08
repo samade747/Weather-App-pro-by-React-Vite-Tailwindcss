@@ -27,20 +27,15 @@ function App() {
         console.log("data", response);
 
 
-        // samad destructuring the data from the response 
-        const {current: {
-            condition: { text },
-            last_updated,
-            cloud,
-            feelslike_c,
-            feelslike_f,
-            humditiy,
-            wind_mph,
-          },
-          location: { name, country },
-            forecast: { forecastday: {
-                0: {astro: { sunrise, sunset },
-                   hour, 
+        // destructuring the data from the response 
+        const {current: {condition: { text }, last_updated,
+                cloud,
+                feelslike_c,
+                feelslike_f,
+                humditiy,
+                wind_mph,
+              }, location: { name, country },
+                  forecast: { forecastday: { 0: {astro: { sunrise, sunset }, hour,                   
                 },      
               },
             },
@@ -53,21 +48,45 @@ function App() {
       // setng weather data state 
       SetWeatherData({
         text,
-        last_updated
-
+        last_updated,
+        feelslike_c,
+        feelslike_f,
+        humditiy,
+        wind_mph,
+        name,
+        country,
+        sunrise,
+        sunset,
+        cloud,
       });
      });
-    }
-  
-  }, [])
+    } 
+
+    getWeather(cityName); //calling the getWeather fun with cityname dependency
+    console.log('ctyname', cityName); // logging the c
+  }, [cityName]);
+
+  const weatherCondition = weatherData?.text;
+  let bgImgMain;
+  switch(weatherCondition){
+    case "Rainy":
+      bgImgMain = RainImg;
+      break;
+    default:
+      bgImgMain = Cloud;
+
+  }
+
+
+
+
+
 
 
   return (
-    <>
-       <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </>
+    <div className='rounded-lg p-4 bg-cover bg-center' style={{ backgroundImage: `url(${bgImgMain})` }}>
+       
+    </div>
   )
 }
 
