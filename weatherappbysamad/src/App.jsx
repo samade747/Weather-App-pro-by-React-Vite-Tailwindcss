@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 
-import Weather_pic from './Weather-pic.jpg'
+// import Weather_pic from './Weather-pic.jpg'
 import Drizzle from './assets/mist-pic.jpg'
 import Cloud from './assets/cloudImg-2.jpg'
 import Halfcloud from './assets/weather-pic.jpg'
@@ -73,9 +73,7 @@ function App() {
       bgImgMain = RainImg;
     case "Clear":
       bgImgMain = ClearImg;
-    case
-
-      break;
+          break;
     default:
       bgImgMain = Cloud;
 
