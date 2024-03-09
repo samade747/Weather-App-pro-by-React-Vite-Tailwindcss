@@ -71,6 +71,10 @@ function App() {
   switch(weatherCondition){
     case "Rainy":
       bgImgMain = RainImg;
+    case "Clear":
+      bgImgMain = ClearImg;
+    case
+
       break;
     default:
       bgImgMain = Cloud;
