@@ -27,11 +27,29 @@ console.log(day)
 console.log(month)
 console.log(getCurrentDate)
 
+const todayDate = `${day} ${month} ${getCurrentDate}`;
+console.log(todayDate)
+
+return(
+    <div>
+        <div className="">
+            <p>Weather App by Samad</p>
+        </div>
+        <div className="rounded py-2 ">
+            <input type="text" onChange={(e) => setCityName(e.target.value)} />
+        </div>
+        <div>
+            <h1>{weatherData?.name},
+                {weatherData?.country}
+             </h1>
+             <p>{todayDate}</p>
+        </div>
 
 
-
-
-
+    </div>
+)
 
 
 }
+
+export default TopBar;

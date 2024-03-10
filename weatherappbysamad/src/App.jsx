@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import TopBar from './components/Topbar'
 
 // import Weather_pic from './Weather-pic.jpg'
 import Drizzle from './assets/mist-pic.jpg'
@@ -69,12 +70,27 @@ function App() {
   const weatherCondition = weatherData?.text;
   let bgImgMain;
   switch(weatherCondition){
-    case "Rainy":
-      bgImgMain = RainImg;
-    case "Clear":
-      bgImgMain = ClearImg;
-          break;
-    default:
+    case "Rainy": bgImgMain = RainImg;
+    break;
+    case "Sunny": bgImgMain = ClearImg;
+    break;
+    case "Patchy rain neariest": bgImgMain = Drizzle;
+    break;
+    case "Partly Cloudy": bgImgMain = Halfcloud;
+    break;
+    case "Overcast" : bgImgMain = OvercastImg;
+    break;
+    case "Moderate or Heavy rain" : bgImgMain = Thunder;
+    break;
+    case "Light Rain ": bgImgMain = RainImg;
+    break;
+    case "Light drizzle": bgImgMain = Drizzle;
+    break;
+    case "Mist": bgImgMain = Cloud;
+    break;
+    case "Cloudy": bgImgMain = Cloud;
+    break;     
+  default:
       bgImgMain = Cloud;
 
   }
@@ -86,8 +102,8 @@ function App() {
 
 
   return (
-    <div className='rounded-lg p-4 bg-cover bg-center' style={{ backgroundImage: `url(${bgImgMain})` }}>
-       
+    <div className='h-screen rounded-lg p-4 bg-cover bg-center' style={{ backgroundImage: `url(${bgImgMain})` }}>
+       <TopBar weatherData={weatherData} setCityName={setCityName} />
     </div>
   )
 }
