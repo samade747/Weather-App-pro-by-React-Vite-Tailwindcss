@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import TopBar from './components/Topbar'
+import WeatherCast from "./components/WeatherCast";
 
-// import Weather_pic from './Weather-pic.jpg'
+
+// import Weather_pic from './weather-pic.jpg'
 import Drizzle from './assets/mist-pic.jpg'
 import Cloud from './assets/cloudImg-2.jpg'
 import Halfcloud from './assets/weather-pic.jpg'
@@ -10,6 +12,7 @@ import Thunder from './assets/thunder.jpg'
 import RainImg from './assets/thunder.jpg'
 import ClearImg from './assets/clear.jpg'
 import OvercastImg from './assets/overcast.jpg'
+
 
 
 function App() {
@@ -104,6 +107,8 @@ function App() {
   return (
     <div className='h-screen rounded-lg p-4 bg-cover bg-center' style={{ backgroundImage: `url(${bgImgMain})` }}>
        <TopBar weatherData={weatherData} setCityName={setCityName} />
+        <WeatherCast weatherData={weatherData} />
+
     </div>
   )
 }

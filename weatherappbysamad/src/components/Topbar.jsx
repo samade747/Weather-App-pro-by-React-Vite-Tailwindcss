@@ -32,13 +32,13 @@ console.log(todayDate)
 
 return(
     <div>
-        <div className="">
+        <div className="" style={{color: "white", fontSize: "20px"}}>
             <p>Weather App by Samad</p>
         </div>
         <div className="rounded py-2 ">
-            <input type="text" onChange={(e) => setCityName(e.target.value)} />
+            <input className="rounded text-red-500 shadow-2xl" type="text" onChange={(e) => setCityName(e.target.value)} />
         </div>
-        <div>
+        <div className="m-2 p-3 ">
             <h1>{weatherData?.name},
                 {weatherData?.country}
              </h1>
