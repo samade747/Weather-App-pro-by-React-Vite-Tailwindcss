@@ -3,9 +3,10 @@ import React from "react";
 import ForecastCard from "./ForecastCard";
 
 const gridStyle = {
-    width: "10",
-    height: "10",
+    width: "10%",
+    height: "10px",
     textAlign: "center",
+    border: "10px solid black",
 };
 
 const HourlyInfo = ({getHour}) => {
@@ -21,3 +22,4 @@ const HourlyInfo = ({getHour}) => {
     )
 }
 
+export default HourlyInfo;

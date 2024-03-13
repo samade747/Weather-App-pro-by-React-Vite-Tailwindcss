@@ -12,6 +12,7 @@ import Thunder from './assets/thunder.jpg'
 import RainImg from './assets/thunder.jpg'
 import ClearImg from './assets/clear.jpg'
 import OvercastImg from './assets/overcast.jpg'
+import HourlyInfo from './components/HourlyInfo';
 
 
 
@@ -111,7 +112,8 @@ function App() {
         <HourlyInfo getHour={getHour} />
 
     </div>
-  )
+  );
+  
 }
 
 export default App
