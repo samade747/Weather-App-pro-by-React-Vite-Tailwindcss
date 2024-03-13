@@ -108,6 +108,7 @@ function App() {
     <div className='h-screen rounded-lg p-4 bg-cover bg-center' style={{ backgroundImage: `url(${bgImgMain})` }}>
        <TopBar weatherData={weatherData} setCityName={setCityName} />
         <WeatherCast weatherData={weatherData} />
+        <HourlyInfo getHour={getHour} />
 
     </div>
   )

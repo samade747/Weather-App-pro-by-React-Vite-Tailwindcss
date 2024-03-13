@@ -8,7 +8,16 @@ const gridStyle = {
     textAlign: "center",
 };
 
-const HourlyInfo = () => {
-    
+const HourlyInfo = ({getHour}) => {
+    console.log("data", getHour)
+    return(
+        <div style={{margin: "0"}}>
+            <p>Forecest</p>
+            {
+                getHour && getHour?.map((weatherVal, ind) => <ForecastCard key={ind} weatherVal={weatherVal} index={ind}  />)
+            }
+
+        </div>
+    )
 }
 
