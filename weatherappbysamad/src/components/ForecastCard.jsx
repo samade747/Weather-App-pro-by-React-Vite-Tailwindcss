@@ -9,6 +9,6 @@ import Sun2 from "../assets/sun-2.png";
 import Umbrella from "../assets/umb.png";
 import SunPic from "../assets/sun-3.png";
 
-const ForecastCard = {{weatherVal, index}} => {
-
+const ForecastCard = ({weatherVal, index}) => {
+        console
 }
