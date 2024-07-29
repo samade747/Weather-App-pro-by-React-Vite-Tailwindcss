@@ -6,20 +6,21 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 
 
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 5000;
+const dbURI = process.env.DB_URI 
 
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB connection
-mongoose.connect('your_mongodb_connection_string', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log('MongoDB connection error:', err));
+
 
 const weatherSchema = new mongoose.Schema({
   cityName: String,
