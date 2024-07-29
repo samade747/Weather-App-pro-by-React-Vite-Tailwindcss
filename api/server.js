@@ -1,3 +1,5 @@
+// server.js or app.js
+
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -30,37 +32,13 @@ const weatherSchema = new mongoose.Schema({
 
 const Weather = mongoose.model('Weather', weatherSchema);
 
-app.post('/api/weather', async (req, res) => {
-  console.log('Received POST request to /api/weather');
-  const { cityName, coordinates, weatherData } = req.body;
-
-  console.log('Request body:', req.body);
-
-  const newWeather = new Weather({
-    cityName,
-    coordinates,
-    weatherData
-  });
-
-  try {
-    const savedWeather = await newWeather.save();
-    console.log('Weather data saved:', savedWeather);
-    res.status(201).json(savedWeather);
-  } catch (err) {
-    console.error('Error saving weather data:', err);
-    res.status(400).json({ error: err.message });
-  }
-});
-
-// Route to fetch all weather data
 app.get('/api/weather', async (req, res) => {
   try {
-    const weatherData = await Weather.find();
-    console.log('Fetched weather data:', weatherData);
-    res.status(200).json(weatherData);
+    const data = await Weather.find();
+    res.status(200).json(data);
   } catch (err) {
-    console.error('Error fetching weather data:', err);
-    res.status(500).json({ error: err.message });
+    console.error('Error fetching weather data from MongoDB:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 

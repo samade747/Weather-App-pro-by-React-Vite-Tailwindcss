@@ -17,7 +17,7 @@ function App() {
   const [getHour, setGetHour] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [fetchedData, setFetchedData] = useState([]);  // New state to store fetched data
+  const [fetchedData, setFetchedData] = useState([]);
 
   useEffect(() => {
     const api_key = "d35a24d40f2c4023b4481203240603";
@@ -30,6 +30,9 @@ function App() {
         const response = await fetch(
           `https://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${getCityName}`
         );
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
         const data = await response.json();
         console.log("Fetched data", data);
 
@@ -58,8 +61,7 @@ function App() {
 
         setWeatherData(weatherInfo);
 
-        // Save to MongoDB
-        await fetch('http://localhost:5173/api/weather', {
+        await fetch('http://localhost:5000/api/weather', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -80,19 +82,21 @@ function App() {
     }
 
     getWeather(cityName);
-    console.log('cityName', cityName);
   }, [cityName]);
 
-  // Fetch data from MongoDB endpoint
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
         const response = await fetch('http://localhost:5000/api/weather');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
         const data = await response.json();
         setFetchedData(data);
         console.log("Data from MongoDB:", data);
       } catch (err) {
         console.error('Error fetching data from MongoDB:', err);
+        setError('Error fetching data from MongoDB');
       }
     };
 
@@ -124,7 +128,6 @@ function App() {
       <TopBar weatherData={weatherData} setCityName={setCityName} />
       <WeatherCast weatherData={weatherData} />
       <HourlyInfo getHour={getHour} />
-      {/* Display data fetched from MongoDB */}
       <div>
         <h2>Weather Data from Database:</h2>
         {fetchedData.map(item => (
@@ -133,7 +136,6 @@ function App() {
             <p>Coordinates: {item.coordinates.lat}, {item.coordinates.lon}</p>
             <p>Weather Condition: {item.weatherData.text}</p>
             <p>Temperature: {item.weatherData.feelslike_c}°C</p>
-            {/* Display other relevant data */}
           </div>
         ))}
       </div>
