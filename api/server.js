@@ -1,4 +1,4 @@
-// server.js or app.js
+// server.js
 
 import express from 'express';
 import mongoose from 'mongoose';
@@ -9,7 +9,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5173; // Changed to 5000 for consistency with frontend
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -39,6 +39,19 @@ app.get('/api/weather', async (req, res) => {
   } catch (err) {
     console.error('Error fetching weather data from MongoDB:', err);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/api/weather', async (req, res) => {
+  const { cityName, coordinates, weatherData } = req.body;
+  const newWeather = new Weather({ cityName, coordinates, weatherData });
+
+  try {
+    const savedWeather = await newWeather.save();
+    res.status(201).json(savedWeather);
+  } catch (err) {
+    console.error('Error saving weather data:', err);
+    res.status(400).json({ error: err.message });
   }
 });
 

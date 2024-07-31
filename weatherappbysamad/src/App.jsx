@@ -1,3 +1,5 @@
+// App.jsx
+
 import { useEffect, useState } from 'react';
 import './App.css';
 import TopBar from './components/Topbar';
@@ -61,7 +63,7 @@ function App() {
 
         setWeatherData(weatherInfo);
 
-        await fetch('http://localhost:5000/api/weather', {
+        await fetch('http://localhost:5173/api/weather', { // Changed to match backend port
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -87,7 +89,7 @@ function App() {
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/weather');
+        const response = await fetch('http://localhost:5173/api/weather'); // Changed to match backend port
         if (!response.ok) {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
