@@ -1,5 +1,3 @@
-// server.js
-
 import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -9,7 +7,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5173; // Changed to 5000 for consistency with frontend
+const port = process.env.PORT || 5173;
 
 app.use(cors());
 app.use(bodyParser.json());
