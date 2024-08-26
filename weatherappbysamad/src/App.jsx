@@ -6,7 +6,7 @@ import Drizzle from './assets/mist-pic.jpg';
 import Cloud from './assets/cloudImg-2.jpg';
 import Halfcloud from './assets/weather-pic.jpg';
 import Thunder from './assets/thunder.jpg';
-import RainImg from './assets/thunder.jpg';
+import RainImg from './assets/rain.jpg'; // Fixed duplicate assignment
 import ClearImg from './assets/clear.jpg';
 import OvercastImg from './assets/overcast.jpg';
 import HourlyInfo from './components/HourlyInfo';
@@ -18,6 +18,33 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [fetchedData, setFetchedData] = useState([]);
+
+  // Function to fetch weather data from backend API
+  const fetchWeatherData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(`http://localhost:5173/api/weather`);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setFetchedData(data);
+      console.log("Data from MongoDB:", data);
+
+    } catch (err) {
+      console.error('Error fetching data from MongoDB:', err);
+      setError('Error fetching data from MongoDB');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeatherData(); // Fetch data when component mounts
+  }, []); // Empty dependency array means it runs once after the first render
 
   useEffect(() => {
     const api_key = "d35a24d40f2c4023b4481203240603";
@@ -61,7 +88,7 @@ function App() {
 
         setWeatherData(weatherInfo);
 
-        await fetch('http://localhost:5000/api/weather', {
+        await fetch('http://localhost:5173/api/weather', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -84,40 +111,27 @@ function App() {
     getWeather(cityName);
   }, [cityName]);
 
-  useEffect(() => {
-    const fetchWeatherData = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/weather');
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        const data = await response.json();
-        setFetchedData(data);
-        console.log("Data from MongoDB:", data);
-      } catch (err) {
-        console.error('Error fetching data from MongoDB:', err);
-        setError('Error fetching data from MongoDB');
-      }
-    };
-
-    fetchWeatherData();
-  }, []);
-
-  const weatherCondition = weatherData?.text;
+  // Define bgImgMain based on weatherCondition
   let bgImgMain;
 
-  switch(weatherCondition) {
-    case "Rainy": bgImgMain = RainImg; break;
-    case "Sunny": bgImgMain = ClearImg; break;
-    case "Patchy rain neariest": bgImgMain = Drizzle; break;
-    case "Partly Cloudy": bgImgMain = Halfcloud; break;
-    case "Overcast": bgImgMain = OvercastImg; break;
-    case "Moderate or Heavy rain": bgImgMain = Thunder; break;
-    case "Light Rain": bgImgMain = RainImg; break;
-    case "Light drizzle": bgImgMain = Drizzle; break;
-    case "Mist": bgImgMain = Cloud; break;
-    case "Cloudy": bgImgMain = Cloud; break;
-    default: bgImgMain = Cloud;
+  if (weatherData) {
+    const weatherCondition = weatherData.text;
+
+    switch(weatherCondition) {
+      case "Rainy": bgImgMain = RainImg; break;
+      case "Sunny": bgImgMain = ClearImg; break;
+      case "Patchy rain nearby": bgImgMain = Drizzle; break; // Corrected typo
+      case "Partly Cloudy": bgImgMain = Halfcloud; break;
+      case "Overcast": bgImgMain = OvercastImg; break;
+      case "Moderate or Heavy rain": bgImgMain = Thunder; break;
+      case "Light Rain": bgImgMain = RainImg; break;
+      case "Light drizzle": bgImgMain = Drizzle; break;
+      case "Mist": bgImgMain = Cloud; break;
+      case "Cloudy": bgImgMain = Cloud; break;
+      default: bgImgMain = Cloud;
+    }
+  } else {
+    bgImgMain = Cloud; // Default background image
   }
 
   if (loading) return <div>Loading...</div>;
