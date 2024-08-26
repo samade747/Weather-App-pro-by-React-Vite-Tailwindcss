@@ -6,7 +6,7 @@ import Drizzle from './assets/mist-pic.jpg';
 import Cloud from './assets/cloudImg-2.jpg';
 import Halfcloud from './assets/weather-pic.jpg';
 import Thunder from './assets/thunder.jpg';
-import RainImg from './assets/rain.jpg'; // Fixed duplicate assignment
+import RainImg from './assets/rain.jpg';
 import ClearImg from './assets/clear.jpg';
 import OvercastImg from './assets/overcast.jpg';
 import HourlyInfo from './components/HourlyInfo';
@@ -25,7 +25,7 @@ function App() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`http://localhost:5173/api/weather`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}`);
       if (!response.ok) {
         throw new Error(`Error: ${response.status} ${response.statusText}`);
       }
@@ -88,7 +88,7 @@ function App() {
 
         setWeatherData(weatherInfo);
 
-        await fetch('http://localhost:5173/api/weather', {
+        await fetch(`${process.env.REACT_APP_API_URL}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -120,7 +120,7 @@ function App() {
     switch(weatherCondition) {
       case "Rainy": bgImgMain = RainImg; break;
       case "Sunny": bgImgMain = ClearImg; break;
-      case "Patchy rain nearby": bgImgMain = Drizzle; break; // Corrected typo
+      case "Patchy rain nearby": bgImgMain = Drizzle; break;
       case "Partly Cloudy": bgImgMain = Halfcloud; break;
       case "Overcast": bgImgMain = OvercastImg; break;
       case "Moderate or Heavy rain": bgImgMain = Thunder; break;
